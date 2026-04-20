@@ -47,13 +47,10 @@ const Index = () => {
                 Jessica Manzo · Senior Technical Program Manager
               </p>
             </div>
-            <div className="flex flex-col items-end gap-1.5">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/40 rounded-lg px-3 py-2 border">
+<div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/40 rounded-lg px-3 py-2 border">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block" />
                 PI 24.2 · Week 7 of 10
               </div>
-              <span className="text-[10px] text-muted-foreground/60">Week of April 14, 2026</span>
-            </div>
           </div>
         </div>
 

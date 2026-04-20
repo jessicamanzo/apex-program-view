@@ -32,7 +32,13 @@ const Roadmap = () => {
 
         {/* At-risk milestone synthesis */}
         <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 px-4 py-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400 mb-1">Roadmap Risk Summary — PI 24.2</p>
+          <div className="flex items-center gap-2 mb-1">
+            <p className="text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400">Roadmap Risk Summary — PI 24.2</p>
+            <span className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-violet-600 bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800 px-1.5 py-0.5 rounded">
+              <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              AI Synthesized
+            </span>
+          </div>
           <p className="text-sm text-foreground/85 leading-relaxed">
             3 milestones are at risk of missing their PI 24.2 target. 2 are blocked by external vendor dependency (SOC 2 auditor). 1 is delayed by scope variance in the feature store architecture. None of these are execution failures — they are dependency and architectural issues that require leadership decisions, not more engineering effort.
           </p>

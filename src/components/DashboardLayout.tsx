@@ -76,14 +76,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <span className="text-xs text-muted-foreground hidden sm:block">{getContextLabel()}</span>
             </div>
             <div className="flex items-center gap-3">
-              {/* Keyboard shortcut hint */}
-              <span className="text-[10px] text-muted-foreground/50 hidden lg:block">
-                Press <kbd className="px-1 py-0.5 bg-muted rounded text-[9px] font-mono">D</kbd> Dashboard &nbsp;
-                <kbd className="px-1 py-0.5 bg-muted rounded text-[9px] font-mono">P</kbd> Programs &nbsp;
-                <kbd className="px-1 py-0.5 bg-muted rounded text-[9px] font-mono">R</kbd> Risks &nbsp;
-                <kbd className="px-1 py-0.5 bg-muted rounded text-[9px] font-mono">E</kbd> Exec Briefing &nbsp;
-                <kbd className="px-1 py-0.5 bg-muted rounded text-[9px] font-mono">M</kbd> My Approach
-              </span>
+
               {/* Share link */}
               <button
                 onClick={copyLink}

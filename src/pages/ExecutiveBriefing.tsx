@@ -1,6 +1,7 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Card, CardContent } from "@/components/ui/card";
-import { AlertTriangle, CheckCircle2, ArrowRight, TrendingDown, DollarSign, Calendar, Printer } from "lucide-react";
+import { AlertTriangle, CheckCircle2, ArrowRight, TrendingDown, DollarSign, Calendar, Printer, Mail, Share2, Copy } from "lucide-react";
+import { useState } from "react";
 import portfolioData from "@/data/portfolioDataV2";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +17,46 @@ export default function ExecutiveBriefing() {
   const overBudget = budgetVariance < 0;
 
   const fmt = (v: number) => v >= 1000 ? `$${(v / 1000).toFixed(1)}M` : `$${v}K`;
+  const [slackCopied, setSlackCopied] = useState(false);
+
+  const nl = "\n";
+  const getEmailBody = () => {
+    const subject = "Portfolio Status Briefing - " + currentPI + " Week " + currentPIWeek;
+    const body = "NOVA SYSTEMS - EXECUTIVE BRIEFING" + nl
+      + "Portfolio Status: " + currentPI + " - Week " + currentPIWeek + " of " + totalPIWeeks + nl + nl
+      + "SITUATION" + nl
+      + "1 program blocked, cascading into 4 at-risk. $3.2M Q2 ARR at risk by May 15." + nl + nl
+      + "STATUS" + nl
+      + "On Track: " + onTrack.length + "  At Risk: " + atRisk.length + "  Blocked: " + blocked.length + nl
+      + "Predictability: " + avgPredictability + "%  Critical Risks: " + criticalRisks.length + nl + nl
+      + "DECISIONS NEEDED" + nl
+      + "- CTO + CFO: Approve premium audit firm ($340K) to accelerate SOC 2 by 3 weeks" + nl
+      + "- CTO: Retention packages for 2 at-risk ML engineers" + nl
+      + "- CPO: Scope freeze on AI Feature Delivery" + nl + nl
+      + "Full briefing: https://programiq-dashboard.vercel.app/executive-briefing";
+    return { subject, body };
+  };
+
+  const exportEmail = () => {
+    const { subject, body } = getEmailBody();
+    const url = "mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    window.location.href = url;
+  };
+
+  const exportSlack = () => {
+    const msg = "*Nova Systems - Portfolio Briefing | " + currentPI + " Week " + currentPIWeek + "*" + nl + nl
+      + "*Situation:* 1 blocked program cascading into 4 at-risk. $3.2M Q2 ARR at risk by May 15." + nl + nl
+      + "*Status:* On Track: " + onTrack.length + "  At Risk: " + atRisk.length + "  Blocked: " + blocked.length + "  |  Predictability: " + avgPredictability + "%" + nl + nl
+      + "*Decisions needed this week:*" + nl
+      + "- CTO + CFO: Approve premium audit firm ($340K) to accelerate SOC 2" + nl
+      + "- CTO: Retention packages for 2 at-risk ML engineers" + nl
+      + "- CPO: Scope freeze on AI Feature Delivery" + nl + nl
+      + "Full briefing: https://programiq-dashboard.vercel.app/executive-briefing";
+    navigator.clipboard.writeText(msg).then(() => {
+      setSlackCopied(true);
+      setTimeout(() => setSlackCopied(false), 2500);
+    });
+  };
 
   const today = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
 
@@ -30,20 +71,39 @@ export default function ExecutiveBriefing() {
             <h1 className="text-2xl font-bold text-foreground mt-1">Portfolio Status — {currentPI}</h1>
             <p className="text-sm text-muted-foreground mt-0.5">Week {currentPIWeek} of {totalPIWeeks} · {today}</p>
           </div>
-          <div className="flex flex-col items-end gap-2">
+          <div className="flex items-center gap-2 flex-wrap print:hidden">
             <button
               onClick={() => window.print()}
-              className="flex items-center gap-1.5 text-xs text-muted-foreground border rounded-lg px-3 py-1.5 hover:bg-muted transition-colors print:hidden"
+              className="flex items-center gap-1.5 text-xs text-muted-foreground border rounded-lg px-3 py-1.5 hover:bg-muted transition-colors"
             >
               <Printer className="h-3.5 w-3.5" />
-              Export for meeting
+              Print / PDF
             </button>
-
+            <button
+              onClick={exportEmail}
+              className="flex items-center gap-1.5 text-xs text-muted-foreground border rounded-lg px-3 py-1.5 hover:bg-muted transition-colors"
+            >
+              <Mail className="h-3.5 w-3.5" />
+              Send via Email
+            </button>
+            <button
+              onClick={exportSlack}
+              className="flex items-center gap-1.5 text-xs border rounded-lg px-3 py-1.5 transition-colors hover:bg-muted text-muted-foreground"
+            >
+              <Copy className="h-3.5 w-3.5" />
+              {slackCopied ? "Copied for Slack!" : "Copy for Slack"}
+            </button>
           </div>
         </div>
 
         {/* So-what lede */}
         <div className="rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 px-5 py-4">
+          <div className="flex justify-end mb-2">
+            <span className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-violet-600 bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800 px-1.5 py-0.5 rounded">
+              <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              AI Synthesized
+            </span>
+          </div>
           <p className="text-sm font-semibold text-foreground leading-relaxed">
             This briefing covers <strong>1 blocked program</strong> cascading into <strong>4 at-risk programs</strong>.
             {" "}$3.2M in Q2 ARR depends on resolving the SOC 2 auditor dependency before May 15.

@@ -54,6 +54,10 @@ export function PortfolioSummaryCard() {
             <div className="flex items-center gap-2.5 flex-wrap">
               <Shield className="h-4 w-4 text-muted-foreground shrink-0" />
               <h2 className="text-[15px] font-bold text-foreground tracking-tight">Executive Summary</h2>
+              <span className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-violet-600 bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800 px-1.5 py-0.5 rounded">
+                <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                AI Synthesized
+              </span>
               <StatusBadge className={healthColor(overallHealth)}>
                 {healthLabel(overallHealth)}
               </StatusBadge>

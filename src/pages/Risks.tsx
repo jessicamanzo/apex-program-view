@@ -50,7 +50,13 @@ const Risks = () => {
 
         {/* Portfolio risk synthesis */}
         <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 p-4">
-          <p className="text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400 mb-2">Portfolio Risk Analysis</p>
+          <div className="flex items-center gap-2 mb-2">
+            <p className="text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400">Portfolio Risk Analysis</p>
+            <span className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-violet-600 bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800 px-1.5 py-0.5 rounded">
+              <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              AI Synthesized
+            </span>
+          </div>
           <p className="text-sm text-foreground/85 leading-relaxed">
             <strong>4 of 15 risks share a common root cause:</strong> external dependency on third-party auditors and vendors outside our control (RSK-001, RSK-002, RSK-003, RSK-005). These cannot be resolved through engineering effort alone — they require executive escalation, vendor negotiation, or contractual remediation. The remaining risks are execution-level and recoverable within the team.
           </p>
